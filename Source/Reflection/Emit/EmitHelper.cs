@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.SymbolStore;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Runtime.InteropServices;
+
 
 using BLToolkit.Common;
 using BLToolkit.Properties;
@@ -209,7 +209,9 @@ namespace BLToolkit.Reflection.Emit
 			int endLine,
 			int endColumn)
 		{
+#if !STANDARD
 			_ilGenerator.MarkSequencePoint(document, startLine, startColumn, endLine, endColumn);
+#endif
 			return this;
 		}
 
@@ -234,9 +236,9 @@ namespace BLToolkit.Reflection.Emit
 			_ilGenerator.UsingNamespace(namespaceName); return this;
 		}
 
-		#endregion
+#endregion
 
-		#region Emit Wrappers
+#region Emit Wrappers
 
 		/// <summary>
 		/// Calls ILGenerator.Emit(<see cref="OpCodes.Add"/>) that
@@ -744,9 +746,9 @@ namespace BLToolkit.Reflection.Emit
 		/// <param name="parameterTypes">The types of the required arguments to the instruction.</param>
 		/// <seealso cref="OpCodes.Calli">OpCodes.Calli</seealso>
 		/// <seealso cref="System.Reflection.Emit.ILGenerator.EmitCalli(OpCode,CallingConvention,Type,Type[])">ILGenerator.EmitCalli</seealso>
-		public EmitHelper calli(CallingConvention unmanagedCallConv, Type returnType, Type[] parameterTypes)
+		public EmitHelper calli(System.Reflection.CallingConventions unmanagedCallConv, Type returnType, Type[] parameterTypes)
 		{
-			_ilGenerator.EmitCalli(OpCodes.Calli, unmanagedCallConv, returnType, parameterTypes);
+			_ilGenerator.EmitCalli(OpCodes.Calli, unmanagedCallConv, returnType, parameterTypes,new Type[0]);
 			return this;
 		}
 
@@ -3438,7 +3440,7 @@ namespace BLToolkit.Reflection.Emit
 		{
 		}
 
-		#endregion
+#endregion
 
 		/// <summary>
 		/// Loads default value of given type onto the evaluation stack.

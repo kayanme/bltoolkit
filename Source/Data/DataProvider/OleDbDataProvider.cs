@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
+using lcpi.data.oledb;
 
 namespace BLToolkit.Data.DataProvider
 {

@@ -147,7 +147,7 @@ namespace BLToolkit.Reflection
 						new[] { typeof(object), typeof(T) },
 						typeAccessor.Type);
 					var emit = new EmitHelper(dm.GetILGenerator());
-
+					
 					emit
 						.ldarg_0
 						.castType (typeAccessor.Type)

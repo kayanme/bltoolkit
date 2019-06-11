@@ -104,6 +104,9 @@ namespace BLToolkit.Reflection.Emit
 			{
 #if SILVERLIGHT
 				_assemblyBuilder = Thread.GetDomain().DefineDynamicAssembly(_assemblyName, AssemblyBuilderAccess.Run);
+#elif STANDARD
+				_assemblyBuilder =
+					AssemblyBuilder.DefineDynamicAssembly(_assemblyName, AssemblyBuilderAccess.Run);
 #else
 				_assemblyBuilder =
 					string.IsNullOrEmpty(assemblyDir)?
@@ -231,7 +234,7 @@ namespace BLToolkit.Reflection.Emit
 		/// </summary>
 		public void Save()
 		{
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !STANDARD
 
 			if (_assemblyBuilder != null)
 				_assemblyBuilder.Save(ModulePath);
